@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import { ThemeProvider } from "@/components/theme-provider"; // Added import
 
 import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
@@ -17,22 +18,20 @@ const queryClient = new QueryClient();
 const App = () => (
 <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-    <Toaster />
-    <Sonner />
-    <BrowserRouter>
-        <Routes>
-
-
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
-          <Route path="/registration" element={<RegistrationPage />} />
-          {/* catch-all */}
-          <Route path="*" element={<NotFound />} />
-
-
-        </Routes>
-    </BrowserRouter>
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme"> {/* Wrapped with ThemeProvider */}
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
+              <Route path="/registration" element={<RegistrationPage />} />
+              {/* catch-all */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </TooltipProvider>
 </QueryClientProvider>
 );
